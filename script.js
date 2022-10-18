@@ -1,12 +1,7 @@
-// "use strict";
+const childrenOne = document.querySelector(".item");
 
-const parent = document.querySelector("#items");
-// const items = document.querySelectorAll(".items");
-// items.style.display = "none";
+const childrenTwo = childrenOne.previousElementSibling;
 
-// parent.style.backgroundColor = "red";
+childrenTwo.style.color = "crimson";
 
-const children = parent.children;
-console.log(children);
-
-// children[0].style.backgroundColor = "violet";
+console.log(childrenTwo);
