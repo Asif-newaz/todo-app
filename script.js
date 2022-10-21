@@ -23,15 +23,15 @@
 // ---The end---
 
 // Select elements and them to variables
-const newTask = document.querySelector("#new-task");
-const form = document.querySelector("form");
-const todoUl = document.querySelector("#items");
-const completeUL = document.querySelector(".complete-list ul");
+let newTask = document.querySelector("#new-task");
+let form = document.querySelector("form");
+let todoUl = document.querySelector("#items");
+let completeUl = document.querySelector(".complete-list ul");
 
-const createTask = (task) => {
-  const listItem = createElement("li");
-  const checkBox = createElement("checkbox");
-  const label = createElement("label");
+let createTask = (task) => {
+  let listItem = document.createElement("li");
+  let checkBox = document.createElement("checkbox");
+  let label = document.createElement("label");
 
   checkBox.type = "input";
   label.innerText = task;
@@ -42,11 +42,43 @@ const createTask = (task) => {
   return listItem;
 };
 
-const addTask = (event) => {
+let addTask = (event) => {
   event.preventDefault();
   let listItem = createTask(newTask.value);
   todoUl.appendChild(listItem);
   newTask.value = "";
+
   // bind the new list item to the incomplete list
-  
+  bindIncompleteItems(listItem, completeTask);
 };
+
+let completeTask = () => {
+  let listItem = this.parentNode;
+  let deleteBtn = document.createElement("button");
+  deleteBtn.innerText = "Delete";
+  deleteBtn.className = "delete";
+  listItem.appendChild(deleteBtn);
+
+  let checkBox = listItem.querySelector('input[type="checkbox"]');
+  checkBox.remove();
+  completeUl.appendChild(listItem);
+  bindCompleteItems(listItem, deleteTask);
+};
+
+let deleteTask = () => {
+  let listItem = this.parentNode;
+  let ul = listItem.parentNode;
+  ul.removeChild(listItem);
+};
+
+let bindIncompleteItems = (taskItem, checkboxClick) => {
+  let checkBox = taskItem.querySelector('input[type="checkbox"]');
+  checkBox.onchange = checkboxClick;
+};
+
+let bindCompleteItems = (taskItem, deleteButtonClick) => {
+  let deleteBtn = taskItem.querySelector("delete");
+  deleteBtn.onclick = deleteButtonClick;
+};
+
+form.addEventListener("submit", addTask);
